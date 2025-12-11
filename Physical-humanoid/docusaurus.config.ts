@@ -23,7 +23,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Syed-AliRaza005',
-  projectName: 'AI-native-book', // Usually your repo name.
+  projectName: 'AI-robotics', // Usually your repo name.
   trailingSlash: false,
   deploymentBranch: 'gh-pages',
 
@@ -46,7 +46,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/Syed-AliRaza005/AI-native-book'
+            'https://github.com/Syed-AliRaza005/AI-robotics'
         },
         blog: false, // disabled blog
         theme: {
@@ -70,19 +70,14 @@ const config: Config = {
 
       },
       items: [
-        // {
-        //   type: 'docSidebar',
-        //   sidebarId: 'tutorialSidebar',
-        //   position: 'left',
-        //   label: 'Textbook',
-        // },
+       
         {
           to: '/docs/overview',
           label: 'Overview',
           position: 'left',
         },
         {
-          href: 'https://github.com/Syed-AliRaza005/AI-native-book',
+          href: 'https://github.com/Syed-AliRaza005/AI-robotics',
           label: 'GitHub',
           position: 'right',
         },
@@ -119,7 +114,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/Syed-AliRaza005/AI-native-book',
+              href: 'https://github.com/Syed-AliRaza005/AI-robotics',
             },
             {
               label: 'Linkedin',
