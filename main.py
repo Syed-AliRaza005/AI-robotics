@@ -22,8 +22,8 @@ app.add_middleware(
 )
 
 # Qdrant configuration
-QDRANT_URL = os.getenv(QDRANT_URL)
-QDRANT_API_KEY = os.getenv(QDRANT_API_KEY)
+QDRANT_URL = os.getenv("QDRANT_URL")
+QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 QDRANT_COLLECTION_NAME = "docusaurus_book_rag"
 
 # Google GenAI configuration
