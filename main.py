@@ -22,14 +22,18 @@ app.add_middleware(
 )
 
 # Qdrant configuration
-QDRANT_URL = "https://63e9de2a-8a61-4e24-a204-ec23d83e394e.us-east4-0.gcp.cloud.qdrant.io"
-QDRANT_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.g4YrQIS00Km_6PgkHuP_r4te_zqkXNWxZJBhCkymtNA"
+QDRANT_URL = os.getenv(QDRANT_URL)
+QDRANT_API_KEY = os.getenv(QDRANT_API_KEY)
 QDRANT_COLLECTION_NAME = "docusaurus_book_rag"
 
 # Google GenAI configuration
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY environment variable not set.")
+elif not QDRANT_API_KEY:
+    raise ValueError("QDRANT_API_KEY environment variable not set.")
+elif not QDRANT_URL:
+    raise ValueError("QDRANT_URL environment variable not set.")
 
 EMBEDDING_MODEL = "text-embedding-004"
 GENERATION_MODEL = "gemini-2.5-flash"
@@ -73,7 +77,7 @@ async def chat_endpoint(request: ChatRequest):
         # 3. Prepare prompt for LLM
         prompt_template = """
         You are a helpful assistant for a Docusaurus book. Answer the user's question based on the provided context only.
-        If the answer is not in the context, politely state that you don't have enough information.
+        If the answer is not in the context, politely state that you don't have enough information.but if qeustion is general and not complex so answer it and say that your assist for helping in book.
 
         Context:
         {context}
