@@ -22,7 +22,8 @@ const ChatWidget = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('https://ai-robotics-production.up.railway.app/chat', {
+             const apiUrl = process.env.back_end_url
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
