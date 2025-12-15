@@ -1,12 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './ChatWidget.module.css'; // We'll create this CSS module
+import styles from './ChatWidget.module.css';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-const ChatWidget = () => {
+const ChatWidgetInternal = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState('');
     const [conversation, setConversation] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const chatWindowRef = useRef(null);
+
+    // Get the backend URL from the site config
+    
+    const { siteConfig } = useDocusaurusContext();
+    const apiUrl = siteConfig.customFields?.back_end_url;
+    console.log(apiUrl)
+
 
     const toggleChat = () => {
         setIsOpen(!isOpen);
@@ -16,18 +25,21 @@ const ChatWidget = () => {
         e.preventDefault();
         if (!message.trim()) return;
 
+        if (!apiUrl) {
+            console.error("Chat backend URL is not configured. Check docusaurus.config.ts and the .env file.");
+            setConversation((prev) => [...prev, { text: "Error: Chat backend is not configured.", sender: 'bot' }]);
+            return;
+        }
+
         const userMessage = { text: message, sender: 'user' };
         setConversation((prev) => [...prev, userMessage]);
         setMessage('');
         setIsLoading(true);
 
         try {
-             const apiUrl = process.env.back_end_url
             const response = await fetch(apiUrl, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: message }),
             });
 
@@ -45,7 +57,6 @@ const ChatWidget = () => {
         }
     };
 
-    // Scroll to the bottom of the chat window on new message
     useEffect(() => {
         if (chatWindowRef.current) {
             chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
@@ -63,7 +74,7 @@ const ChatWidget = () => {
                     <div className={styles.chatBody} ref={chatWindowRef}>
                         {conversation.length === 0 && !isLoading && (
                             <div className={styles.welcomeMessage}>
-                                Hi there! How can I help you with the Docusaurus book?
+                                Hi there! How can I help you?
                             </div>
                         )}
                         {conversation.map((msg, index) => (
@@ -106,5 +117,10 @@ const ChatWidget = () => {
     );
 };
 
-export default ChatWidget;
+const ChatWidget = () => (
+    <BrowserOnly fallback={null}>
+      {() => <ChatWidgetInternal />}
+    </BrowserOnly>
+);
 
+export default ChatWidget;
