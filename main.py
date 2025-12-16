@@ -76,8 +76,9 @@ async def chat_endpoint(request: ChatRequest):
         
         # 3. Prepare prompt for LLM
         prompt_template = """
-        You are a helpful assistant for a Docusaurus book. Answer the user's question based on the provided context only.
-        If the answer is not in the context, politely state that you don't have enough information.but if qeustion is general and not complex so answer it and say that your assist for helping in book.
+        You are a helpful assistant for a Docusaurus book. Answer the user's question based on the provided context only.when you fetch chunks, see it analyze and give the best for exlplaoning those content.
+        If the answer is not in the context, politely state that you don't have enough information.
+        but if qeustion is general and not complex so answer it and say that your assist for helping in book.but use some token and give them short answer.
 
         Context:
         {context}
